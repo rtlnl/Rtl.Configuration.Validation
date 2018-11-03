@@ -31,31 +31,3 @@
   }
   ```
 
-# How not to use
-
-This simple validation doesn't handle collections and complex object:
-```csharp
-class Config
-{
-   public Person Person { get; set; }
-   public IEnumerable<Person> People { get; set; }
-}
-
-class Person
-{
-    [Required]
-    public string Name { get; set; }
-}
-```
-
-This configuration will not throw:
-```json
-{
-    "Config":{
-        "Person": {},
-        "People":[
-            {}
-        ]
-    }
-}
-```
