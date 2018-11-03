@@ -19,13 +19,13 @@
       services.AddConfig<MyConfiguration>(Configuration, "MyConfig");
   }
   ```
-  This code will throw if settings don't meet requirements
+  The validation throws during start up if something is wrong with the configuration
 - Use configuration object in code:
 
   ```csharp
   public class SomeService : ISomeService
   {
-      public SomeService(MyConfiguration config)
+      public SomeService(IOptions<MyConfiguration> config)
       {
       }
   }
