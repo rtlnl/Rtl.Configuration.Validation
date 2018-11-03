@@ -56,7 +56,7 @@ namespace Rtl.Configuration.Validation
 
         private bool IsCollectionType(Type type)
         {
-            return typeof(IEnumerable).IsAssignableFrom(type);
+            return type != typeof(string) && typeof(IEnumerable).IsAssignableFrom(type);
         }
 
         private void ValidateUserDefinedObject(object obj)
