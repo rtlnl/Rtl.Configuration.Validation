@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Rtl.Configuration.Validation
 {
-    public static class ConfigurationExtentions
+    public static class ServiceCollectionExtentions
     {
         public static IServiceCollection AddConfig<T>(this IServiceCollection services, IConfiguration configuration, string sectionName)
             where T : class, new()
