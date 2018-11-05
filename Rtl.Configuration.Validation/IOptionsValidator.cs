@@ -1,6 +1,6 @@
 ﻿namespace Rtl.Configuration.Validation
 {
-    interface IOptionsValidator
+    public interface IOptionsValidator
     {
         void Validate();
     }
