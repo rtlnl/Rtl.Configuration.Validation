@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Rtl.Configuration.Validation\Rtl.Configuration.Validation.csproj" />
+    <ProjectReference Include="..\..\src\Rtl.Configuration.Validation\Rtl.Configuration.Validation.csproj" />
   </ItemGroup>
 
 </Project>
