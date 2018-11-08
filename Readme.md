@@ -53,3 +53,19 @@ Given this definition of `Config` class the code `services.AddConfig<Config>(Con
 
 Note that `Config.Person` and `Config.People` properties can be null because they are not required
 
+# Api
+
+#### AddConfig
+```csharp
+public static IServiceCollection AddConfig<T>(this IServiceCollection services, IConfiguration configuration, string sectionName)
+    where T : class, new()
+```
+Adds IOptions\<T> to IoC container, validates config before `Startup.Configure` is called
+
+#### GetConfig
+```csharp
+public static T GetConfig<T>(this IConfiguration configuration, string sectionName)
+    where T : class, new()
+```
+Gets config of type `T` from configuration, validates and returns it
+
