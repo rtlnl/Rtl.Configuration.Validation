@@ -1,6 +1,6 @@
-﻿using Rtl.Configuration.Validation.Tests.Helpers;
+﻿using Rtl.Configuration.Validation.Tests.Configs;
+using Rtl.Configuration.Validation.Tests.Helpers;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -24,7 +24,7 @@ namespace Rtl.Configuration.Validation.Tests
                 ["test:RequiredPeople:0:Age"] = "6",
             };
 
-            await TestHelpers.ValidationSucceeds<Config>(settings);
+            await TestHelpers.ValidationSucceeds<ComplexConfig>(settings);
         }
 
         [Fact]
@@ -39,7 +39,7 @@ namespace Rtl.Configuration.Validation.Tests
                 ["test:RequiredPeople:0:Age"] = "5",
             };
 
-            await TestHelpers.ValidationSucceeds<Config>(settings);
+            await TestHelpers.ValidationSucceeds<ComplexConfig>(settings);
         }
 
         [Fact]
@@ -55,7 +55,7 @@ namespace Rtl.Configuration.Validation.Tests
                 ["test:RequiredPeople:0:Age"] = "5",
             };
 
-            TestHelpers.ValidationThrows<Config>(settings);
+            TestHelpers.ValidationThrows<ComplexConfig>(settings);
         }
 
         [Fact]
@@ -71,7 +71,7 @@ namespace Rtl.Configuration.Validation.Tests
                 ["test:People:0:Age"] = "5",
             };
 
-            TestHelpers.ValidationThrows<Config>(settings);
+            TestHelpers.ValidationThrows<ComplexConfig>(settings);
         }
 
         [Fact]
@@ -84,7 +84,7 @@ namespace Rtl.Configuration.Validation.Tests
                 ["test:RequiredPerson:Age"] = "2"
             };
 
-            TestHelpers.ValidationThrows<Config>(settings);
+            TestHelpers.ValidationThrows<ComplexConfig>(settings);
         }
 
         [Fact]
@@ -99,30 +99,7 @@ namespace Rtl.Configuration.Validation.Tests
                 ["test:RequiredPeople:0:Age"] = "",
             };
 
-            await TestHelpers.ValidationSucceeds<Config>(settings);
+            await TestHelpers.ValidationSucceeds<ComplexConfig>(settings);
         }
-    }
-
-    public class Config
-    {
-        public int Id { get; set; }
-        public Person Person { get; set; }
-
-        [Required]
-        public Person RequiredPerson { get; set; }
-
-        public IEnumerable<Person> People { get; set; }
-
-        [Required]
-        public IEnumerable<Person> RequiredPeople { get; set; }
-    }
-
-    public class Person
-    {
-        [Required]
-        public string Name { get; set; }
-
-        [Range(1, 18)]
-        public int Age { get; set; }
     }
 }

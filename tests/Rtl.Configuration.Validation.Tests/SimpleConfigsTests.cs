@@ -1,6 +1,6 @@
+using Rtl.Configuration.Validation.Tests.Configs;
 using Rtl.Configuration.Validation.Tests.Helpers;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -52,15 +52,5 @@ namespace Rtl.Configuration.Validation.Tests
 
             TestHelpers.ValidationThrows<TestConfiguration>(settings);
         }
-    }
-
-
-    public class TestConfiguration
-    {
-        [Required]
-        public string Name { get; set; }
-
-        [Range(0, 10)]
-        public int Value { get; set; }
     }
 }
