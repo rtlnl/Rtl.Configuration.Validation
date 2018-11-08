@@ -11,8 +11,13 @@ namespace Rtl.Configuration.Validation
         private readonly T _options;
 
         public OptionsValidator(IOptions<T> options)
+            : this(options.Value)
         {
-            _options = options.Value;
+        }
+
+        public OptionsValidator(T options)
+        {
+            _options = options;
         }
 
         public void Validate()

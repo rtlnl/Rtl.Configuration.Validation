@@ -1,6 +1,6 @@
-﻿using Rtl.Configuration.Validation.Tests.Helpers;
+﻿using Rtl.Configuration.Validation.Tests.Configs;
+using Rtl.Configuration.Validation.Tests.Helpers;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -29,20 +29,5 @@ namespace Rtl.Configuration.Validation.Tests
 
             TestHelpers.ValidationThrows<SuperComplexConfig>(settings);
         }
-    }
-
-    public class SuperComplexConfig
-    {
-        public SubConfigLevel1 SubConfigLevel1 { get; set; }
-    }
-
-    public class SubConfigLevel1
-    {
-        public SubConfigLevel2 SubConfigLevel2 { get; set; }
-    }
-    public class SubConfigLevel2
-    {
-        [Required]
-        public string Name { get; set; }
     }
 }
