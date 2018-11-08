@@ -67,5 +67,5 @@ Adds IOptions\<T> to IoC container, validates config before `Startup.Configure` 
 public static T GetConfig<T>(this IConfiguration configuration, string sectionName)
     where T : class, new()
 ```
-Gets config of type `T` from configuration, validates and returns it
-
+Gets config of type `T` from configuration, validates and returns it.
+Use this method when you don't need to add IOptions and you want to get validated config inside `ConfigureServices` method and use right away
