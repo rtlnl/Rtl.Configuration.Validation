@@ -27,9 +27,15 @@ namespace Rtl.Configuration.Validation
 
         private void Validate(object obj)
         {
+            var type = obj.GetType();
+            if (IsCollectionType(type))
+            {
+                ValidateCollection((IEnumerable)obj);
+                return;
+            }
+
             Validator.ValidateObject(obj, new ValidationContext(obj), validateAllProperties: true);
 
-            var type = obj.GetType();
             var propertyInfos = type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
             foreach(var propertyInfo in propertyInfos)
             {
