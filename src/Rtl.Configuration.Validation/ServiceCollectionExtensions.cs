@@ -16,7 +16,7 @@ namespace Rtl.Configuration.Validation
                 return services;
             }
 
-            if (!services.Contains(new ServiceDescriptor(typeof(IStartupFilter), typeof(StartupFilter), ServiceLifetime.Transient)))
+            if (!services.Any(x => x.ImplementationType == typeof(StartupFilter)))
             {
                 services.AddTransient<IStartupFilter, StartupFilter>();
             }
