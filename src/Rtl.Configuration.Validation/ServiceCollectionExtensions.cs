@@ -8,7 +8,13 @@ namespace Rtl.Configuration.Validation
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddConfig<T>(this IServiceCollection services, IConfiguration configuration, string sectionName = null)
+        public static IServiceCollection AddConfig<T>(this IServiceCollection services, IConfiguration configuration, string sectionName)
+            where T : class, new()
+        {
+            return services.AddConfig<T>(configuration.GetSection(sectionName));
+        }
+
+        public static IServiceCollection AddConfig<T>(this IServiceCollection services, IConfiguration configuration)
             where T : class, new()
         {
             if (services.Any(x => x.ServiceType == typeof(IConfigureOptions<T>)))
@@ -21,9 +27,7 @@ namespace Rtl.Configuration.Validation
                 services.AddTransient<IStartupFilter, StartupFilter>();
             }
 
-            var config = sectionName != null ? configuration.GetSection(sectionName) : configuration;
-
-            services.Configure<T>(config);
+            services.Configure<T>(configuration);
             services.AddTransient<IOptionsValidator, OptionsValidator<T>>();
 
             return services;

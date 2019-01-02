@@ -7,9 +7,15 @@ namespace Rtl.Configuration.Validation
         public static T GetConfig<T>(this IConfiguration configuration, string sectionName)
             where T : class, new()
         {
-            var config = configuration.GetSection(sectionName).Get<T>();
+            return configuration.GetSection(sectionName).GetConfig<T>();
+        }
 
+        public static T GetConfig<T>(this IConfiguration configuration)
+            where T : class, new()
+        {
+            var config = configuration.Get<T>();
             var validator = new OptionsValidator<T>(config);
+
             validator.Validate();
 
             return config;
