@@ -18,9 +18,7 @@ namespace Rtl.Configuration.Validation
         public static IServiceCollection AddConfig<T>(this IServiceCollection services, IConfiguration configuration)
             where T : class, new()
         {
-            services.ConfigureWithValidation<T>(options => configuration.Bind(options));
-
-            return services;
+            return services.ConfigureWithValidation<T>(options => configuration.Bind(options));
         }
 
         public static IServiceCollection ConfigureWithValidation<T>(this IServiceCollection services, Action<T> configure)
