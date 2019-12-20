@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +18,12 @@ namespace Rtl.Configuration.Validation
         public static IServiceCollection AddConfig<T>(this IServiceCollection services, IConfiguration configuration)
             where T : class, new()
         {
+            return services.ConfigureWithValidation<T>(options => configuration.Bind(options));
+        }
+
+        public static IServiceCollection ConfigureWithValidation<T>(this IServiceCollection services, Action<T> configure)
+            where T : class, new()
+        {
             if (services.Any(x => x.ServiceType == typeof(IConfigureOptions<T>)))
             {
                 return services;
@@ -27,7 +34,7 @@ namespace Rtl.Configuration.Validation
                 services.AddTransient<IStartupFilter, StartupFilter>();
             }
 
-            services.Configure<T>(configuration);
+            services.Configure(configure);
             services.AddTransient<IOptionsValidator, OptionsValidator<T>>();
 
             return services;

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
 namespace Rtl.Configuration.Validation.Tests.Helpers
@@ -15,19 +16,25 @@ namespace Rtl.Configuration.Validation.Tests.Helpers
         public static void ValidationThrows<TConfig>(Dictionary<string, string> settings, string sectionName = "test")
             where TConfig : class, new()
         {
-            IConfiguration configuration = null;
+            IConfiguration configuration = new ConfigurationBuilder()
+                .AddInMemoryCollection(settings)
+                .Build();
 
+            ValidationThrows(settings, services => services.AddConfig<TConfig>(configuration, sectionName));
+        }
+
+        public static void ValidationThrows(Dictionary<string, string> settings, Action<IServiceCollection> configure)
+        {
             Assert.Throws<ValidationException>(() =>
             {
                 var webHost = WebHost.CreateDefaultBuilder()
                     .ConfigureAppConfiguration((hostingContext, config) =>
                     {
                         config.AddInMemoryCollection(settings);
-                        configuration = config.Build();
                     })
                     .ConfigureServices(services =>
                     {
-                        services.AddConfig<TConfig>(configuration, sectionName);
+                        configure(services);
                     })
                     .Configure(app =>
                     {
@@ -40,21 +47,28 @@ namespace Rtl.Configuration.Validation.Tests.Helpers
             });
         }
 
-        public static async Task ValidationSucceeds<TConfig>(Dictionary<string, string> settings, string sectionName = "test")
+        public static Task ValidationSucceeds<TConfig>(Dictionary<string, string> settings, string sectionName = "test")
             where TConfig : class, new()
         {
-            IConfiguration configuration = null;
+            IConfiguration configuration = new ConfigurationBuilder()
+                .AddInMemoryCollection(settings)
+                .Build();
+
+            return ValidationSucceeds(settings, services => services.AddConfig<TConfig>(configuration, sectionName));
+        }
+
+        public static async Task ValidationSucceeds(Dictionary<string, string> settings, Action<IServiceCollection> configure)
+        {
             using (var cts = new CancellationTokenSource())
             {
                 var webHost = WebHost.CreateDefaultBuilder()
                     .ConfigureAppConfiguration((hostingContext, config) =>
                     {
                         config.AddInMemoryCollection(settings);
-                        configuration = config.Build();
                     })
                     .ConfigureServices(services =>
                     {
-                        services.AddConfig<TConfig>(configuration, sectionName);
+                        configure(services);
                     })
                     .Configure(app =>
                     {
