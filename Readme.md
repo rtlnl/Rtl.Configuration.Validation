@@ -69,3 +69,19 @@ public static T GetConfig<T>(this IConfiguration configuration, string sectionNa
 ```
 Gets config of type `T` from configuration, validates and returns it.
 Use this method when you don't need to add IOptions and you want to get validated config inside `ConfigureServices` method and use right away
+
+#### Configure
+```csharp
+public static IServiceCollection Configure<T>(this IServiceCollection services, Action<T> configure)
+    where T : class, new()
+```
+Supports configuring your service through the provision of an `Action<T>` parameter. 
+
+Example usage:
+```csharp
+services.Configure(options => configuration.Bind(options));
+```
+Or:
+```csharp
+services.Configure(options => options.BaseAddress = new Uri("http://localhost:443"))
+```
