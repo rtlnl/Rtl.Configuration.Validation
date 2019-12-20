@@ -9,7 +9,7 @@ namespace Rtl.Configuration.Validation.Tests
     public class ConfigureTests
     {
         [Fact]
-        public async Task ConfigureServicesDoesntThrow()
+        public async Task ConfigureWithValidationDoesntThrow()
         {
             await TestHelpers.ValidationSucceeds(null, services =>
                 services.ConfigureWithValidation<TestConfiguration>(option =>
@@ -20,7 +20,7 @@ namespace Rtl.Configuration.Validation.Tests
         }
 
         [Fact]
-        public void ConfigureServicesThrows()
+        public void ConfigureWithValidationThrows()
         {
             TestHelpers.ValidationThrows(null, services =>
                 services.ConfigureWithValidation<TestConfiguration>(option =>
