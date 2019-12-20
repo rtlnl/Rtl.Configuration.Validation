@@ -23,8 +23,7 @@ namespace Rtl.Configuration.Validation.Tests.Helpers
             ValidationThrows(settings, services => services.AddConfig<TConfig>(configuration, sectionName));
         }
 
-        public static void ValidationThrows(Dictionary<string, string> settings,
-            Action<IServiceCollection> configure)
+        public static void ValidationThrows(Dictionary<string, string> settings, Action<IServiceCollection> configure)
         {
             Assert.Throws<ValidationException>(() =>
             {
@@ -48,8 +47,7 @@ namespace Rtl.Configuration.Validation.Tests.Helpers
             });
         }
 
-        public static Task ValidationSucceeds<TConfig>(Dictionary<string, string> settings,
-            string sectionName = "test")
+        public static Task ValidationSucceeds<TConfig>(Dictionary<string, string> settings, string sectionName = "test")
             where TConfig : class, new()
         {
             IConfiguration configuration = new ConfigurationBuilder()
@@ -59,8 +57,7 @@ namespace Rtl.Configuration.Validation.Tests.Helpers
             return ValidationSucceeds(settings, services => services.AddConfig<TConfig>(configuration, sectionName));
         }
 
-        public static async Task ValidationSucceeds(Dictionary<string, string> settings,
-            Action<IServiceCollection> configure)
+        public static async Task ValidationSucceeds(Dictionary<string, string> settings, Action<IServiceCollection> configure)
         {
             using (var cts = new CancellationTokenSource())
             {

@@ -9,8 +9,7 @@ namespace Rtl.Configuration.Validation
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddConfig<T>(this IServiceCollection services, IConfiguration configuration,
-            string sectionName)
+        public static IServiceCollection AddConfig<T>(this IServiceCollection services, IConfiguration configuration, string sectionName)
             where T : class, new()
         {
             return services.AddConfig<T>(configuration.GetSection(sectionName));
@@ -24,8 +23,7 @@ namespace Rtl.Configuration.Validation
             return services;
         }
 
-        public static IServiceCollection ConfigureWithValidation<T>(this IServiceCollection services,
-            Action<T> configure)
+        public static IServiceCollection ConfigureWithValidation<T>(this IServiceCollection services, Action<T> configure)
             where T : class, new()
         {
             if (services.Any(x => x.ServiceType == typeof(IConfigureOptions<T>)))
